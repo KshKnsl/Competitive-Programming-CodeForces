@@ -1,44 +1,31 @@
 import java.io.*;
 import java.util.*;
 
-public class B_Deja_Vu 
+public class D_Same_Differences 
+{public static void main(String[] args)
 {
-    public static void main(String[] args) 
+    Scan sc = new Scan();
+    int t = sc.nextInt();
+    while (t-- > 0)
     {
-        Scan sc = new Scan();
-        int t = sc.nextInt();
-        while (t-- > 0) 
+        long res = 0;
+        int n = sc.nextInt();
+        int[] arr = sc.nextArray(n);
+        HashMap<Integer, Long> map = new HashMap<>();
+        
+        for (int i = 0; i < n; i++)
         {
-            int n = sc.nextInt();
-            int q = sc.nextInt();
-            long arr[] = sc.nextArray(n);
-            long x[] = sc.nextArray(q);
-            long prev = 31;
-            for(int i=0;i<q;i++)
-            {
-                if(prev<=x[i]) continue;
-                else
-                {
-                    long power = 1l<<x[i];
-                    prev= x[i];
-                    for(int j=0;j<n;j++)
-                    {
-                        if(arr[j] % power==0)
-                        {
-                            arr[j]= arr[j]+(power/2);
-                        }
-                    }
-                }
-            }
-
-            for(int i=0;i<n;i++)
-            {
-                out.print(arr[i] + " ");
-            }
-            out.println();
+            int key = arr[i] - i;
+            map.put(key, map.getOrDefault(key, 0L) + 1);
         }
-        out.close();
+        
+        for (long val : map.values())
+        res += (val * (val - 1)) / 2;
+        
+        out.println(res);
     }
+    out.close();
+}
 
     static class Scan 
     {
@@ -47,7 +34,7 @@ public class B_Deja_Vu
         String next() { while (st == null || !st.hasMoreTokens()) try { st = new StringTokenizer(br.readLine()); } catch (IOException e) {} return st.nextToken(); }
         int nextInt() { return Integer.parseInt(next()); }
         long nextLong() { return Long.parseLong(next()); }
-        long[] nextArray(int n) { long[] arr = new long[n]; for (int i = 0; i < n; i++) arr[i] = nextLong(); return arr; }
+        int[] nextArray(int n) { int[] arr = new int[n]; for (int i = 0; i < n; i++) arr[i] = nextInt(); return arr; }
         int[][] nextArray2D(int n, int m) { int[][] arr = new int[n][m]; for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) arr[i][j] = nextInt(); return arr; }
     }
 
